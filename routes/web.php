@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function () {
 use App\Http\Controllers\StudentController\StudentControllerList;
 
 Route::get('/students', [StudentControllerList::class, 'index'])->name('students.index');
+//Route::post('/attendance/update', [DashboardController::class, 'update']);
+Route::post('/attendance/fetch', [DashboardController::class, 'fetch']);
+
 
 
 require __DIR__.'/auth.php';

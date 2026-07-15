@@ -10,49 +10,111 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $dbUrl = env('FIREBASE_DB_URL'); // put your Firebase DB URL in .env
+        $dbUrl = env('FIREBASE_DB_URL');
         $response = Http::get("$dbUrl/rfid_lock.json");
         $data = $response->json();
 
-$authorizedCards = collect($data['authorizedCards'] ?? [])
-    ->map(function ($item, $key) {
-        return [
-            'uid'        => $key, // dito natin ilalagay yung UID galing sa key
-            'name'       => $item['name'] ?? 'Unknown',
-            'authorized' => $item['authorized'] ?? false,
-        ];
+        $authorizedCards = collect($data['authorizedCards'] ?? [])
+            ->map(function ($item, $key) {
+                return [
+                    'uid'        => $key,
+                    'name'       => $item['name'] ?? 'Unknown',
+                    'authorized' => $item['authorized'] ?? false,
+                ];
+            });
+
+        $scanHistory = collect($data['scanHistory'] ?? []);
+
+        // Filter by date (fix: use createFromTimestampMs)
+        $dateFilter = $request->input('date', Carbon::today()->toDateString());
+        $scanHistory = $scanHistory->filter(function ($item) use ($dateFilter) {
+            if (!isset($item['timestamp'])) {
+                return false;
+            }
+
+            try {
+                $itemDate = Carbon::createFromTimestampMs($item['timestamp'])->toDateString();
+                return $itemDate === $dateFilter;
+            } catch (\Exception $e) {
+                return false;
+            }
+        });
+
+        // Get UIDs of present students
+        $presentUIDs = $scanHistory->pluck('uid')->unique();
+
+        // Separate present and absent
+        $present = $authorizedCards->filter(fn($student) => $presentUIDs->contains($student['uid']));
+        $absent  = $authorizedCards->filter(fn($student) => !$presentUIDs->contains($student['uid']));
+
+        // Totals
+        $totalStudents = $authorizedCards->count();
+        $totalPresent  = $present->count();
+        $totalAbsent   = $absent->count();
+
+        return view('dashboard', compact(
+            'present',
+            'absent',
+            'dateFilter',
+            'totalStudents',
+            'totalPresent',
+            'totalAbsent'
+        ));
+    }
+
+    public function update(Request $request)
+{
+    $slice = $request->input('slice'); // "Present" or "Absent"
+    $date  = $request->input('date');
+
+    // Example: log to DB or update a table
+    \DB::table('attendance_logs')->insert([
+        'slice' => $slice,
+        'date'  => $date,
+        'created_at' => now(),
+    ]);
+
+    return response()->json(['status' => 'ok', 'message' => 'Record updated']);
+}
+public function fetch(Request $request)
+{
+    $dbUrl = env('FIREBASE_DB_URL');
+    $response = Http::get("$dbUrl/rfid_lock.json");
+    $data = $response->json();
+
+    $authorizedCards = collect($data['authorizedCards'] ?? [])
+        ->map(function ($item, $key) {
+            return [
+                'uid'        => $key,
+                'name'       => $item['name'] ?? 'Unknown',
+                'authorized' => $item['authorized'] ?? false,
+            ];
+        });
+
+    $scanHistory = collect($data['scanHistory'] ?? []);
+    $dateFilter = $request->input('date', \Carbon\Carbon::today()->toDateString());
+
+    $scanHistory = $scanHistory->filter(function ($item) use ($dateFilter) {
+        if (!isset($item['timestamp'])) return false;
+        try {
+            $itemDate = \Carbon\Carbon::createFromTimestampMs($item['timestamp'])->toDateString();
+            return $itemDate === $dateFilter;
+        } catch (\Exception $e) {
+            return false;
+        }
     });
 
-$scanHistory = collect($data['scanHistory'] ?? []);
+    $presentUIDs = $scanHistory->pluck('uid')->unique();
+    $present = $authorizedCards->filter(fn($student) => $presentUIDs->contains($student['uid']))->values();
+    $absent  = $authorizedCards->filter(fn($student) => !$presentUIDs->contains($student['uid']))->values();
 
-// Filter by date
-$dateFilter = $request->input('date', \Carbon\Carbon::today()->toDateString());
-$scanHistory = $scanHistory->filter(function ($item) use ($dateFilter) {
-    return isset($item['timestamp']) &&
-           \Carbon\Carbon::parse($item['timestamp'])->toDateString() === $dateFilter;
-});
+    return response()->json([
+        'present' => $present,
+        'absent' => $absent,
+        'totalStudents' => $authorizedCards->count(),
+        'totalPresent' => $present->count(),
+        'totalAbsent' => $absent->count(),
+    ]);
+}
 
-// Get UIDs of present students
-$presentUIDs = $scanHistory->pluck('uid')->unique();
-
-// Separate present and absent
-$present = $authorizedCards->filter(fn($student) => $presentUIDs->contains($student['uid']));
-$absent  = $authorizedCards->filter(fn($student) => !$presentUIDs->contains($student['uid']));
-
-// After filtering present and absent
-$totalStudents = $authorizedCards->count();
-$totalPresent  = $present->count();
-$totalAbsent   = $absent->count();
-
-return view('dashboard', compact(
-    'present',
-    'absent',
-    'dateFilter',
-    'totalStudents',
-    'totalPresent',
-    'totalAbsent'
-));
-
-
-    }
 }
