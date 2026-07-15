@@ -7,6 +7,13 @@
 						<span>Dashboard</span></a>
 				</li>
 
+			
+
+			
+
+				
+
+				<li class="menu-title">Setup</li>
 				<li class="submenu">
 					<a href="#"><span class="menu-side"><i class="fa-solid fa-user-group"></i></span>
 						<span>User Management</span> <span class="menu-arrow"></span>
@@ -18,13 +25,6 @@
 					
 					</ul>
 				</li>
-
-			
-
-				
-
-				<li class="menu-title">Setup</li>
-
 			
 
 				<li class="submenu mb-5">
@@ -35,7 +35,15 @@
 					</ul>
 				</li>
 
+				<li class="menu-title">Features</li>
+
+					<li>
+					<a href="/students"><span class="menu-side"><i class="fa-solid fa-user"></i></span>
+						<span>Student</span></a>
+				</li>
+
 			</ul>
 		</div>
 	</div>
+
 </div>

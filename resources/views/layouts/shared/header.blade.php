@@ -21,7 +21,7 @@
 <div class="header">
 	<div class="header-left">
 		<a href="/" class="logo">
-			<img src="{{ asset('assets/img/logo.png') }}" width="35" height="35" alt> <span>Diagcare</span>
+			<img src="{{ asset('assets/img/signalLogo.jpg') }}" width="35" height="35" alt> <span>SOBC</span>
 		</a>
 	</div>
 	<a id="toggle_btn" href="#"><img src="{{ asset('assets/img/icons/bar-icon.svg') }}" alt></a>
@@ -29,25 +29,25 @@
 		<a id="mobile_btn" class="mobile_btn float-start" href="#sidebar"><img
 				src="{{ asset('assets/img/icons/bar-icon.svg') }}" alt></a>
 
-	<div class="top-nav-search mob-view">
+	{{--<div class="top-nav-search mob-view">
 		<form>
 			<input type="text" class="form-control" placeholder="Search here">
 			<a class="btn"><img src="{{ asset('assets/img/icons/search-normal.svg') }}" alt></a>
 		</form>
 
-	</div>
+	</div>--}}
 	<a href="#top" id="back-to-top-button" alt>
 		<i class="fa-solid fa-arrow-up"></i> <!-- Use the appropriate icon class here -->
 	</a>
 
 	<ul class="nav user-menu float-end">
 
-		<li class="nav-item dropdown has-arrow user-profile-list">
+		{{--<li class="nav-item dropdown has-arrow user-profile-list">
 
 			<a href="#" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
 				<div class="user-names">
-					{{--<h5>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h5>
-					<span class="text-capitalize">{{ auth()->user()->roles[0]->name }}</span>--}}
+					<h5>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h5>
+					<span class="text-capitalize">{{ auth()->user()->roles[0]->name }}</span>
 				</div>
 				<span class="user-img">
 					<img src="{{ asset('assets/img/user.jpg') }}" alt="Admin">
@@ -62,20 +62,20 @@
 					</form>
 				</a>
 			</div>
-		</li>
-		{{--<span class="mx-auto d-block m-auto p-4 text-center">
+		</li>--}}
+		<span class="mx-auto d-block m-auto p-4 text-center">
 			<a class="nav-item btn-sm" href="{{ route('logout') }}"
 				onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
 					class="fa-solid fa-right-from-bracket"></i> Logout</a>
-		</span>--}}
+		</span>
 	</ul>
 
-	{{--<div class="dropdown mobile-user-menu float-end">
+	<div class="dropdown mobile-user-menu float-end">
 		<span>
 			<a class="btn btn-sm btn-primary" href="{{ route('logout') }}"
 				onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 				<i class="fa-solid fa-right-from-bracket"></i>
 			</a>
 		</span>
-	</div>--}}
+	</div>
 </div>
