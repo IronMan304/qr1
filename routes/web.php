@@ -30,6 +30,16 @@ Route::get('/students', [StudentControllerList::class, 'index'])->name('students
 //Route::post('/attendance/update', [DashboardController::class, 'update']);
 Route::post('/attendance/fetch', [DashboardController::class, 'fetch']);
 
+use App\Http\Controllers\SubjectController;
+
+Route::resource('subjects', SubjectController::class);
+
+use App\Http\Controllers\GenderController;
+
+Route::resource('genders', GenderController::class);
+
+
+
 
 
 require __DIR__.'/auth.php';
