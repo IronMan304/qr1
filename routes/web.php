@@ -38,8 +38,18 @@ use App\Http\Controllers\GenderController;
 
 Route::resource('genders', GenderController::class);
 
+use App\Http\Controllers\CourseController;
+
+Route::resource('courses', CourseController::class);
+
+use App\Http\Controllers\StudentController;
+
+Route::resource('students', StudentController::class);
 
 
+use App\Http\Controllers\ModuleController;
+
+Route::resource('modules', ModuleController::class);
 
 
 require __DIR__.'/auth.php';

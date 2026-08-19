@@ -35,11 +35,24 @@
 					</ul>
 				</li>
 
+				
+
 				<li class="menu-title">Features</li>
 
-					<li>
+			<li>
 					<a href="/students"><span class="menu-side"><i class="fa-solid fa-user"></i></span>
 						<span>Student</span></a>
+
+				</li>
+						
+							<li class="submenu mb-5">
+					<a href="#"><i class="fa fa-user-shield"></i> <span>System</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li><a href="/modules">Module</a></li>
+						<li><a href="/courses">Course</a></li>
+						<li><a href="/subjects">Subject</a></li>
+						<li><a href="/genders">Gender</a></li>
+					</ul>
 				</li>
 
 			</ul>
