@@ -62,5 +62,21 @@ use App\Http\Controllers\DomainController;
 
 Route::resource('domains', DomainController::class);
 
+use App\Http\Controllers\AssessmentTypeController;
+
+Route::resource('assessment_types', AssessmentTypeController::class);
+
+use App\Http\Controllers\EvaluationController;
+
+Route::resource('evaluations', EvaluationController::class);
+
+use App\Http\Controllers\TopicAssessmentController;
+use App\Http\Controllers\ModuleAssessmentController;
+
+Route::resource('topic_assessments', TopicAssessmentController::class);
+Route::resource('module_assessments', ModuleAssessmentController::class);
+
+
+
 
 require __DIR__.'/auth.php';

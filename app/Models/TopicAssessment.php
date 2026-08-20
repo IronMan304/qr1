@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Score extends Model
+class TopicAssessment extends Model
 {
     protected $fillable = ['student_id','subject_id','exam_type_id','weight','grade','points'];
 
@@ -23,4 +23,3 @@ class Score extends Model
         return $this->belongsTo(ExamType::class);
     }
 }
-

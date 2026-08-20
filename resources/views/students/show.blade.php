@@ -1,37 +1,66 @@
 <x-app-layout>
 <div class="content">
-    <div class="page-header">
-        <h3>{{ $student->full_name }} - Exams Taken</h3>
-        <a href="{{ route('students.index') }}" class="btn btn-secondary">Back</a>
-    </div>
+    <h3>{{ $student->full_name }} - Assessments</h3>
+    <a href="{{ route('students.index') }}" class="btn btn-secondary">Back</a>
 
-    <div class="card">
+    <!-- Topic Assessments -->
+    <div class="card mt-3">
+        <div class="card-header"><strong>Topic Assessments</strong></div>
         <div class="card-body">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Exam Type</th>
-                        <th>Module</th>
                         <th>Subject</th>
-                        <th>Score</th>
-                        <th>Max Score</th>
-                        <th>Date Recorded</th>
+                        <th>Modules (Student's Course)</th>
+                        <th>Weight</th>
+                        <th>Grade</th>
+                        <th>Points</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($scores as $score)
+                    @forelse($topicAssessments as $ta)
                         <tr>
-                            <td>{{ $score->examType->name }}</td>
-                            <td>{{ $score->subject->module->name ?? ''}}</td>
-                            <td>{{ $score->subject->name }}</td>
-                            <td>{{ $score->score }}</td>
-                            <td>{{ $score->max_score }}</td>
-                            <td>{{ $score->created_at->format('M d, Y') }}</td>
+                            <td>{{ $ta->subject->name }}</td>
+                            <td>
+                                @foreach($ta->subject->modules as $mod)
+                                    <span class="badge bg-info">{{ $mod->name }}</span>
+                                @endforeach
+                            </td>
+                            <td>{{ $ta->weight }}</td>
+                            <td>{{ $ta->grade }}</td>
+                            <td>{{ $ta->points }}</td>
                         </tr>
                     @empty
+                        <tr><td colspan="5">No topic assessments recorded.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Module Assessments -->
+    <div class="card mt-3">
+        <div class="card-header"><strong>Module Assessments</strong></div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Weight</th>
+                        <th>Grade</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($moduleAssessments as $ma)
                         <tr>
-                            <td colspan="5">No exams recorded for this student.</td>
+                            <td>{{ $ma->module->name }}</td>
+                            <td>{{ $ma->weight }}</td>
+                            <td>{{ $ma->grade }}</td>
+                            <td>{{ $ma->points }}</td>
                         </tr>
+                    @empty
+                        <tr><td colspan="4">No module assessments recorded.</td></tr>
                     @endforelse
                 </tbody>
             </table>

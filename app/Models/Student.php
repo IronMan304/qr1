@@ -30,4 +30,13 @@ class Student extends Model
     return $this->hasMany(Score::class);
 }
 
+   public function topicAssessments() {
+    return $this->hasMany(TopicAssessment::class);
+}
+public function moduleAssessments() {
+    return $this->hasMany(ModuleAssessment::class);
+}
+
+
+
 }

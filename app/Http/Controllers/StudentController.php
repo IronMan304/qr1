@@ -66,10 +66,38 @@ public function destroy(Student $student)
     return redirect()->route('students.index')->with('success','Student deleted successfully.');
 }
 
-    public function show(Student $student)
+//     public function show(Student $student)
+// {
+//     $scores = $student->scores()->with(['examType','subject'])->get();
+//     return view('students.show', compact('student','scores'));
+// }
+
+// public function show(Student $student)
+// {
+//     $topicAssessments = $student->topicAssessments()->with('subject.module')->get();
+//     $moduleAssessments = $student->moduleAssessments()->with('module')->get();
+
+//     return view('students.show', compact('student','topicAssessments','moduleAssessments'));
+// }
+
+public function show(Student $student)
 {
-    $scores = $student->scores()->with(['examType','subject'])->get();
-    return view('students.show', compact('student','scores'));
+    // Topic assessments with subjects + modules filtered by student's course
+    $topicAssessments = $student->topicAssessments()
+        ->with(['subject.modules' => function($q) use ($student) {
+            $q->where('course_id', $student->course_id);
+        }])
+        ->get();
+
+    // Module assessments (already tied to modules of the student's course)
+    $moduleAssessments = $student->moduleAssessments()
+        ->with('module')
+        ->get();
+
+    return view('students.show', compact('student','topicAssessments','moduleAssessments'));
 }
+
+
+
 
 }

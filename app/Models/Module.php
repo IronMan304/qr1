@@ -9,12 +9,21 @@ class Module extends Model
   // ✅ idagdag ang course_id dito
     protected $fillable = ['code','name','course_id'];
 
-    public function subjects() {
-        return $this->belongsToMany(Subject::class, 'module_subject');
-    }
+    // public function subjects() {
+    //     return $this->belongsToMany(Subject::class, 'module_subject');
+    // }
 
     public function course() {
         return $this->belongsTo(Course::class);
+    }
+
+   public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'module_subject');
+    }
+      public function moduleAssessments()
+    {
+        return $this->hasMany(ModuleAssessment::class);
     }
     
 }

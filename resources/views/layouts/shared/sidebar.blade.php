@@ -54,6 +54,10 @@
 						<li><a href="/genders">Gender</a></li>
 							<li><a href="/exam_types">Exam Type</a></li>
 								<li><a href="/scores">Score</a></li>
+
+								<li><a href="/topic_assessments">Topic Assessment</a></li>
+								<li><a href="/module_assessments">Module Assessment</a></li>
+							
 					</ul>
 				</li>
 
