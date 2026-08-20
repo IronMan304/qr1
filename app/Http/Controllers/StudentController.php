@@ -66,4 +66,10 @@ public function destroy(Student $student)
     return redirect()->route('students.index')->with('success','Student deleted successfully.');
 }
 
+    public function show(Student $student)
+{
+    $scores = $student->scores()->with(['examType','subject'])->get();
+    return view('students.show', compact('student','scores'));
+}
+
 }

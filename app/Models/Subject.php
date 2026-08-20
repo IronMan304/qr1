@@ -12,5 +12,6 @@ class Subject extends Model
     return $this->belongsToMany(Module::class, 'module_subject');
 }
 
+
 }
 

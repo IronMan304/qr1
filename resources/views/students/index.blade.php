@@ -5,6 +5,7 @@
         <a href="{{ route('students.create') }}" class="btn btn-primary">Add Student</a>
     </div>
 
+
     <div class="card">
         <div class="card-body">
             <table class="table">
@@ -24,6 +25,7 @@
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
+                                <a href="{{ route('students.show',$student->id) }}" class="btn btn-sm btn-info">View Exams</a>
                             </td>
                         </tr>
                     @endforeach

@@ -51,5 +51,16 @@ use App\Http\Controllers\ModuleController;
 
 Route::resource('modules', ModuleController::class);
 
+use App\Http\Controllers\ExamTypeController;
+
+Route::resource('exam_types', ExamTypeController::class);
+use App\Http\Controllers\ScoreController;
+
+Route::resource('scores', ScoreController::class);
+
+use App\Http\Controllers\DomainController;
+
+Route::resource('domains', DomainController::class);
+
 
 require __DIR__.'/auth.php';

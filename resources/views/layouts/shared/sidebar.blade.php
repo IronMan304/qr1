@@ -52,6 +52,8 @@
 						<li><a href="/courses">Course</a></li>
 						<li><a href="/subjects">Subject</a></li>
 						<li><a href="/genders">Gender</a></li>
+							<li><a href="/exam_types">Exam Type</a></li>
+								<li><a href="/scores">Score</a></li>
 					</ul>
 				</li>
 

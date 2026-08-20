@@ -25,4 +25,9 @@ class Student extends Model
     public function getFullNameAttribute() {
         return "{$this->first_name} {$this->middle_name} {$this->last_name}";
     }
+
+    public function scores() {
+    return $this->hasMany(Score::class);
+}
+
 }
